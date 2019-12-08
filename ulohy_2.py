@@ -102,6 +102,3 @@ def statistika():
 
 
 ask()
-
-
-
