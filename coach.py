@@ -63,7 +63,7 @@ else:
                 ls.append("5")
             elif i == "juny":
                 ls.append("6")
-            elif i == "july"
+            elif i == "july":
                 ls.append("7")
             elif i == "august":
                 ls.append("8")
