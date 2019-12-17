@@ -36,6 +36,7 @@ def nope():
 
 
 ls = []
+rls = []
 a = str(input("???").lower()).split("/")
 if len(a) == 3:
     for i in a:
@@ -47,10 +48,17 @@ if len(a) == 3:
             ls.append(i)
     print("/".join(ls))
 else:
+    print(a)
+    a = "".join(a)
     a = a.split(" ")
-    a = a.split(",")
-    for i in a:
-        if a.index(i) == 0:
+    pp = "".join(a[-1])
+    rls = pp.split(",")
+    rls.insert(0,a[0])
+
+    print(a)
+    print("".join(a[1]))
+    for i in rls:
+        if rls.index(i) == 0:
             if i == "january":
                 ls.append("1")
             elif i == "february":
@@ -75,9 +83,11 @@ else:
                 ls.append("11")
             else:
                 ls.append("12")
-        elif a.index(i) == 1:
+        elif rls.index(i) == 1:
             ls.insert(0,i)
         else:
-            ls.append(i) 
-    print("/".join(ls))
+            ls.append(i)
+    r = "/".join(ls)
+    p = r.replace(",","/") 
+    print(p)
         
