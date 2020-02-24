@@ -38,10 +38,18 @@ relative = (results_list[3]/results_list[1])*100
 interval.append(results_list[1]-relative)
 interval.append(results_list[1]+relative)
 
+first_column_list.append(results_list[0])
+main_value_list.append(results_list[1])
+second_column_list.append(results_list[2])
+third_column_list.append(results_list[3])
+
 print("+----+---------+---------+---------+")
 for i in range(len(first_column_list)):
     print("|",first_column_list[i]," "*(2-len(str(first_column_list[i])))+"|",round(main_value_list[i],2)," "*(7-len(str(round(main_value_list[i],2))))+"|",round(second_column_list[i],2)," "*(7-len(str(round(second_column_list[i],2))))+"|",round(third_column_list[i],2)," "*(7-len(str(round(third_column_list[i],2))))+"|")
     print("+----+---------+---------+---------+")
+
+
+
 
 print("Relatívna odchýlka: ",relative,"%",sep="")
 print("Najpravdepodobnejšia hodnota je: (",interval[0],";",interval[1],")",sep="")
