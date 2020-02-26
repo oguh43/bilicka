@@ -21,10 +21,6 @@ if str(input("Chcete načítať dáta zo súboru?\nAno/ Nie\n")).lower() == "ano
     else:
         sys.exit()
 else:
-    #f = open(os.path.join(__location__, 'hodnoty.TXT'))
-    #print(f.read())
-
-
 
     while True:
         a = float(input("Hodnoty: "))
