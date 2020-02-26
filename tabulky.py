@@ -26,7 +26,7 @@ for i in range(len(second_column_list)):
 
 results_list.append(sum(third_column_list)/len(second_column_list))
 relative = (results_list[3]/results_list[1])*100
-interval.append(results_list[1]-relative); interval.append(results_list[1]+relative); first_column_list.append(results_list[0]); main_value_list.append(results_list[1]) ;second_column_list.append(results_list[2]); third_column_list.append(results_list[3])
+interval.append(results_list[1]-results_list[3]); interval.append(results_list[1]+results_list[3]); first_column_list.append(results_list[0]); main_value_list.append(results_list[1]) ;second_column_list.append(results_list[2]); third_column_list.append(results_list[3])
 longest_first_column , longest_main , longest_second_column , longest_third_column = 0 , 0 , 0 , 0
 
 for i in first_column_list:
