@@ -1,13 +1,39 @@
+# This is a canary version of tabulky
+from openpyxl import Workbook
 from datetime import date
+import os
+import numpy as np
+import pandas as pd
+import time
+import sys
+
+__location__ = os.path.realpath(
+    os.path.join(os.getcwd(), os.path.dirname(__file__)))
 
 main_value_list , first_column_list , second_column_list , third_column_list , results_list , relative , interval = [] , [] , [] , [] , [""] , None , []
 
-while True:
-    a = float(input("Hodnoty: "))
-    if a != 0:
-        main_value_list.append(a)
+if str(input("Chcete načítať dáta zo súboru?\nAno/ Nie\n")).lower() == "ano":
+    print("Vytvorte textový súbor z názvom hodnoty a zadajte čísla do jedného riadku oddelené medzerou. Ako desatinná čiarka sa používa znak \".\" (bodka).")
+    time.sleep(2)
+    if str(input("Ak ste predošlý krok vykonali, zadajte \"1\".")) == "1":
+        f = open(os.path.join(__location__, 'hodnoty.TXT'))
+        main_value_list = f.read().split(" ")
     else:
-        break
+        sys.exit()
+else:
+    #f = open(os.path.join(__location__, 'hodnoty.TXT'))
+    #print(f.read())
+
+
+
+    while True:
+        a = float(input("Hodnoty: "))
+        if a != 0:
+            main_value_list.append(a)
+        else:
+            break
+
+main_value_list = [float(i) for i in main_value_list]
 
 number_of_values = len(main_value_list)
 
@@ -50,3 +76,25 @@ for i in range(len(first_column_list)):
 print("Relatívna odchýlka: ",relative,"%",sep="")
 print("Najpravdepodobnejšia hodnota je: (",interval[0]," ; ",interval[1],")",sep="")
 print(date.today())
+
+print("\nPrajete si zapísať hodnoty do tabulky?")
+write_table = str(input("Ano/ Nie\n")).lower()
+
+combined_list = []
+combined_list.append(first_column_list)
+combined_list.append(main_value_list)
+combined_list.append(second_column_list)
+combined_list.append(third_column_list)
+converted = np.array(combined_list).T.tolist()
+
+interval_fin = "Najpravdepodobnejšia hodnota je: ("+str(interval[0])+" ; "+str(interval[1])+")"
+relative_fin = "Relatívna odchýlka: "+str(relative)+"%"
+if write_table == "ano":
+    wb = Workbook()
+    ws = wb.active
+    ws.insert_rows(0)
+    for row in converted:
+        ws.append(row)
+    ws.cell(row = 4, column = 7, value = interval_fin)
+    ws.cell(row = 2, column = 7, value = relative_fin)
+    wb.save(os.path.join(__location__, "Tabulka.xlsx"))    
