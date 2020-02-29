@@ -47,9 +47,9 @@ for i in range(len(ls)):
     print(ls[i][1] , end = " ")
     print(ls[i][0])
 """
-
-
-url = "https://slovnik.aktuality.sk/synonyma/?q=ahoj"
+"""
+url = "https://slovnik.aktuality.sk/synonyma/?q="+input()
+#url = "https://slovnik.aktuality.sk/synonyma/?q=ahoj"
 #url = "https://slovnik.aktuality.sk/synonyma/?q=abstinent"
 response = requests.get(url)
 soup = BeautifulSoup(response.text, "html.parser")
@@ -66,4 +66,19 @@ halp = "".join(cry[1].stripped_strings)
 print(halp)
 halp_moar = halp.split("\"")
 print(halp_moar)
+"""
 
+q = str(input("Veta? ")).split(" ")
+ls = []
+
+for i in q:
+    url = "https://slovnik.aktuality.sk/synonyma/?q="+i
+    response = requests.get(url)
+    soup = BeautifulSoup(response.text, "html.parser")
+    soup.findAll("a")
+    cry = soup.findAll(class_ = "term")
+    halp = "".join(cry[1].stripped_strings)
+    halp_moar = halp.split("\"")
+    ls.append(halp_moar[-1])
+
+print(" ".join(ls))
