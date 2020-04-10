@@ -1,6 +1,4 @@
 real = open("real.txt","r",encoding="utf-8")
-
-#print(real.read())
 to_transpose = (":").join(real.read().split("\n")).split(":")
 real.close()
 
@@ -34,5 +32,23 @@ def index_del():
     real.close()
 
 
-index_del()
+resolved = open("resolved.txt","r",encoding="utf-8")
+res = int(resolved.read())
+resolved.close()
+print("Current value of completed tasks is: %i"%(res))
+override = str(input("Manual? Yes/No ")).lower()
+
+if override == "yes":
+    res = res+int(input("+Number? "))
+elif override == "correct":
+    res = res-int(input("-Number? "))
+else:
+    res = res+1
+
+
+resolved = open("resolved.txt","w",encoding="utf-8")
+resolved.write(str(res))
+resolved.close()
+
+#index_del()
 
