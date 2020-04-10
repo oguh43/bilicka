@@ -1,20 +1,10 @@
 real = open("real.txt","r",encoding="utf-8")
-to_transpose = (":").join(real.read().split("\n")).split(":")
+to_transpose = real.read().split("\n")
 real.close()
-
-print(to_transpose)
-
-for i in to_transpose:
-    print(i)
-
 def add_to_db(name,subject,suffix_of_subject,email):
     real = open("real.txt","a",encoding="utf-8")
     real.write("\n%s:%s:%s:%s" %(name,subject,suffix_of_subject,email))
     real.close()
-
-if str(input("Add? ")) == "1":
-    ask = input("Oddelte znakom \":\"").split(":")
-    add_to_db(ask[0],ask[1],ask[2],ask[3])
 
 def index_del():
     real = open("real.txt","r",encoding="utf-8")
@@ -32,6 +22,10 @@ def index_del():
     real.close()
 
 
+if str(input("Add? ")) == "1":
+    ask = input("Oddelte znakom \":\"").split(":")
+    add_to_db(ask[0],ask[1],ask[2],ask[3])
+
 resolved = open("resolved.txt","r",encoding="utf-8")
 res = int(resolved.read())
 resolved.close()
@@ -45,10 +39,17 @@ elif override == "correct":
 else:
     res = res+1
 
-
 resolved = open("resolved.txt","w",encoding="utf-8")
 resolved.write(str(res))
 resolved.close()
 
-#index_del()
+index_del()
 
+teacher, adr, sub_a, sub = [],[],[],[]
+print(to_transpose[0].split(":"))
+for i in range(len(to_transpose)):
+    teacher.append(to_transpose[i].split(":")[0])
+    adr.append(to_transpose[i].split(":")[1])
+    sub_a.append(to_transpose[i].split(":")[2])
+    sub.append(to_transpose[i].split(":")[3])
+print(teacher,adr,sub_a,sub)
