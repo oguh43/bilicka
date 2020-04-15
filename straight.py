@@ -60,7 +60,7 @@ def winner(after_ai,after_player):
 # Ako vidíme, netreba list dopredu sortovať, je to spravené za nás. Program môže dostať aj negatívne hodnoty,
 # a aj hodnoty vyššie ako 12. Objekt ktorý sa vráti je list v liste, napr.: [[3, 4, 5, 6, 7], [9, 10, 11]].
 # Prvú postupku vieme vybrať pomocou: check_straight(ai)[0] (viď. index). ak chceme najvyššiu, dáme index -1,
-# Keďže program dáva najvyššie postupky na koniec.
+# keďže program dáva najvyššie postupky na koniec.
 
 ai = [1,2,3,4,5,6,7,8,9,10,11,12]
 for i in range(3):
@@ -89,4 +89,4 @@ print(winner(after,aftr))
 # ak ju chcete použiť, radšej si ju sami odtestujte.
 
 # Posledné. Kód používa import *, tzn.: nepoužívam random.shuffle() ale len shuffle. Ak máte import :
-# from random import randint   jednoducho pridajte: from random import randint, shuffle
+# from random import randint; jednoducho pridajte: from random import randint, shuffle (viď. pridanú čiarku a shuffle).
