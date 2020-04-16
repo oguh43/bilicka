@@ -41,11 +41,17 @@ def longest(test):
         return -1
 
 def winner(after_ai,after_player):
+    if len(after_ai) == 0 and len(after_player) > 0:
+        return "player"
+    elif len(after_player) == 0 and len(after_ai) > 0:
+        return "ai"
+    elif len(after_ai) == 0 and len(after_player) == 0:
+        return "tie"
     lon_ai = longest(after_ai)
     lon_pl = longest(after_player)
-    if len(after_ai) > len(after_player) or len(after_ai[lon_ai]) > len(after_player[lon_pl]):
+    if len(after_ai[lon_ai]) > len(after_player[lon_pl]):
         return "ai"
-    elif len(after_player) > len(after_ai) or len(after_player[lon_pl]) > len(after_ai[lon_ai]):
+    elif len(after_player[lon_pl]) > len(after_ai[lon_ai]):
         return "player"
     mx_ai = after_ai[lon_ai][-1]
     mx_pl = after_player[lon_pl][-1]
