@@ -22,14 +22,6 @@ from oauth2client import client
 from oauth2client import tools
 from oauth2client import file
 def get_credentials():
-    """Gets valid user credentials from storage.
-
-    If nothing has been stored, or if the stored credentials are invalid,
-    the OAuth2 flow is completed to obtain the new credentials.
-
-    Returns:
-        Credentials, the obtained credential.
-    """
     home_dir = os.path.expanduser('~')
     credential_dir = os.path.join(home_dir, '.credentials')
     if not os.path.exists(credential_dir):
@@ -43,7 +35,7 @@ def get_credentials():
         flow.user_agent = APPLICATION_NAME
         if flags:
             credentials = tools.run_flow(flow, store, flags)
-        else: # Needed only for compatability with Python 2.6
+        else:
             credentials = tools.run(flow, store)
         print('Storing credentials to ' + credential_path)
     return credentials
@@ -101,8 +93,6 @@ def create_message_with_attachment(sender, to, subject, message_text, file):
   msg.add_header('Content-Disposition', 'attachment', filename="%s_uloha.docx" %sub_a[who].lower())
   message.attach(msg)
 
-  #raw_message = base64.urlsafe_b64encode(message.as_string().encode("utf-8"))
-  #return {'raw': raw_message.decode("utf-8")}
   return {'raw': base64.urlsafe_b64encode(message.as_bytes()).decode()}
 
 real = open("contacts_db.txt","r",encoding="utf-8")
@@ -165,9 +155,10 @@ for i in teacher:
   r+=1
   print(r,") ",i, sep="")
 who = int(input("Číslo vybraného učiteľa: "))-1
-file_name = "send.docx"
-a = "Riešenie príkladov z %s" %sub[who]
-b = "Dobrý deň,<br>Posielam vám vypracované úlohy z %s.<br><br>Hugo Bohácsek, Ki.B %s #%i<br> Sent via gmail api, <a href=\"https://github.com/oguh43/bilicka/blob/master/cooopy.py\">sauce</a>." %(sub[who],dte,res)
+pripona = str(input("Prípona súboru?"))
+file_name = "send"+pripona
+a = "Riešenie úlohy z %s" %sub[who]
+b = "Dobrý deň,<br>Posielam vám vypracovanú úlohu z %s.<br><br>Hugo Bohácsek, Ki.B %s #%i<br> Sent via gmail api, <a href=\"https://github.com/oguh43/bilicka/blob/master/cooopy.py\">sauce</a>." %(sub[who],dte,res)
 
 mine = create_message_with_attachment("hugo.bohacsek@gmail.com",adr[who],a,b,file_name)
 testSend = send_message(service, 'me', mine)
