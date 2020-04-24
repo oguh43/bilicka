@@ -34,8 +34,7 @@ def get_credentials():
     credential_dir = os.path.join(home_dir, '.credentials')
     if not os.path.exists(credential_dir):
         os.makedirs(credential_dir)
-    credential_path = os.path.join(credential_dir,
-                                   'gmail-quickstart.json')
+    credential_path = os.path.join(credential_dir,'gmail-quickstart.json')
 
     store = oauth2client.file.Storage(credential_path)
     credentials = store.get()
@@ -69,7 +68,7 @@ def create_message_with_attachment(sender, to, subject, message_text, file):
   message['from'] = sender
   message['subject'] = subject
 
-  msg = MIMEText(message_text)
+  msg = MIMEText(message_text,"html")
   message.attach(msg)
 
   content_type, encoding = mimetypes.guess_type(file)
@@ -99,29 +98,76 @@ def create_message_with_attachment(sender, to, subject, message_text, file):
     encoders.encode_base64(msg)
     fp.close()
   filename = os.path.basename(file)
-  msg.add_header('Content-Disposition', 'attachment', filename=filename)
+  msg.add_header('Content-Disposition', 'attachment', filename="%s_uloha.docx" %sub_a[who].lower())
   message.attach(msg)
 
   #raw_message = base64.urlsafe_b64encode(message.as_string().encode("utf-8"))
   #return {'raw': raw_message.decode("utf-8")}
   return {'raw': base64.urlsafe_b64encode(message.as_bytes()).decode()}
 
+real = open("contacts_db.txt","r",encoding="utf-8")
+to_transpose = real.read().split("\n")
+real.close()
+def add_to_db(name,subject,suffix_of_subject,email):
+    real = open("contacts_db.txt","a",encoding="utf-8")
+    real.write("\n%s:%s:%s:%s" %(name,subject,suffix_of_subject,email))
+    real.close()
+
+def index_del():
+    real = open("contacts_db.txt","r",encoding="utf-8")
+    data = real.read().split("\n")
+    real.close()
+    for i in range(len(data)):
+        print("%i) %s"%(i,data[i]))
+    index = int(input("Index na vymazanie? "))
+    real = open("contacts_db.txt","w",encoding="utf-8")
+    for i in range(len(data)):
+        if i != index and i != len(data)-1:
+            real.write("%s\n"%(data[i]))
+        elif i != index and i == len(data)-1:
+            real.write("%s"%(data[i]))
+    real.close()
+
+modify_db = str(input("Pre pridanie do databázy stlačte \"1\", pre odobranie \"2\"")) == "1"
+if modify_db == "1":
+    ask = input("Oddelte znakom \":\"").split(":")
+    add_to_db(ask[0],ask[1],ask[2],ask[3])
+elif modify_db == "2":
+    index_del()
+
+resolved = open("resolved.txt","r",encoding="utf-8")
+res = int(resolved.read())
+resolved.close()
+print("Current value of completed tasks is: %i"%(res),end=". ")
+override = str(input("Do you wish to override this number? Yes/No/Correct ")).lower()
+if override == "yes":
+    res = res+int(input("+Number? "))
+elif override == "correct":
+    res = res-int(input("-Number? "))
+else:
+    res = res+1
+resolved = open("resolved.txt","w",encoding="utf-8")
+resolved.write(str(res))
+resolved.close()
 
 today = date.today()
 dte = today.strftime("%d.%m.%Y")
 
-teacher = ["Hugo Bohácsek","Jana Manczálová","Iveta Rybárová"]
-adr = ["agenthugo43@gmail.com","s.bohacsekova@cartv.eu","agentzoja43@gmail.com"]
-sub_a = ["Informatika","Fyzika","Matematika"]
-sub = ["Informatiky","Fyziky","Matematiky"]
+teacher, adr, sub_a, sub = [],[],[],[]
+for i in range(len(to_transpose)):
+    teacher.append(to_transpose[i].split(":")[0])
+    sub_a.append(to_transpose[i].split(":")[1])
+    sub.append(to_transpose[i].split(":")[2])
+    adr.append(to_transpose[i].split(":")[3])
+
 r = 0
 for i in teacher:
   r+=1
   print(r,") ",i, sep="")
 who = int(input("Číslo vybraného učiteľa: "))-1
-file_name = "%s_uloha.docx" %sub_a[who].lower()
+file_name = "send.docx"
 a = "Riešenie príkladov z %s" %sub[who]
-b = "Dobrý deň,\nPosielam vám vypracované úlohy z %s.\nHugo Bohácsek, Ki.B %s" %(sub[who],dte)
+b = "Dobrý deň,<br>Posielam vám vypracované úlohy z %s.<br><br>Hugo Bohácsek, Ki.B %s #%i<br> Sent via gmail api, <a href=\"https://github.com/oguh43/bilicka/blob/master/cooopy.py\">sauce</a>." %(sub[who],dte,res)
 
 mine = create_message_with_attachment("hugo.bohacsek@gmail.com",adr[who],a,b,file_name)
 testSend = send_message(service, 'me', mine)
