@@ -86,7 +86,6 @@ def create_message_with_attachment(sender, to, subject, message_text, file):
     fp = open(file, 'rb')
     msg = MIMEBase(main_type, sub_type)
     msg.set_payload(fp.read())
-    #
     encoders.encode_base64(msg)
     fp.close()
   msg.add_header('Content-Disposition', 'attachment', filename="%s_uloha%s" %(sub_a[who].lower(),pripona))
