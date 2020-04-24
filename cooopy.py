@@ -89,8 +89,7 @@ def create_message_with_attachment(sender, to, subject, message_text, file):
     #
     encoders.encode_base64(msg)
     fp.close()
-  filename = os.path.basename(file)
-  msg.add_header('Content-Disposition', 'attachment', filename="%s_uloha.docx" %sub_a[who].lower())
+  msg.add_header('Content-Disposition', 'attachment', filename="%s_uloha%s" %(sub_a[who].lower(),pripona))
   message.attach(msg)
 
   return {'raw': base64.urlsafe_b64encode(message.as_bytes()).decode()}
