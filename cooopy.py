@@ -156,7 +156,7 @@ who = int(input("Číslo vybraného učiteľa: "))-1
 pripona = str(input("Prípona súboru?"))
 file_name = "send"+pripona
 a = "Riešenie úlohy z %s" %sub[who]
-b = "Dobrý deň,<br>Posielam vám vypracovanú úlohu z %s.<br><br>Hugo Bohácsek, Ki.B %s #%i<br> Sent via gmail api, <a href=\"https://github.com/oguh43/bilicka/blob/master/cooopy.py\">sauce</a>." %(sub[who],dte,res)
+b = "Dobrý deň,<br>Posielam Vám vypracovanú úlohu z %s.<br><br>Hugo Bohácsek, Ki.B %s #%i<br> Sent via gmail api, <a href=\"https://github.com/oguh43/bilicka/blob/master/cooopy.py\">sauce</a>." %(sub[who],dte,res)
 
 mine = create_message_with_attachment("hugo.bohacsek@gmail.com",adr[who],a,b,file_name)
 testSend = send_message(service, 'me', mine)
