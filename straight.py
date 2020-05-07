@@ -1,98 +1,58 @@
-from random import *
+from random import randint, shuffle
 
-def pos(test):    
-    postupka = []
-    temp = []
-    dlzka = 0
-    for i in test:
-        if str(i).isdigit() == True:
-            dlzka = dlzka +1
-            temp.append(i)
-        elif str(i).isdigit() == False and dlzka >= 3:
-            dlzka = 0
-            postupka.append(temp.copy())
-            temp.clear()
-        elif str(i).isdigit() == False and dlzka < 3:
-            dlzka = 0
-            temp.clear()
-    if dlzka >= 3:
-        postupka.append(temp)
-    return postupka
-
-def check_straight(test):
-    test.sort()
-    pl = test[0]
-    for i in range(len(test)+8):
-        try:
-            if test[i] != pl:
-                test.insert(i," ")
-            pl = pl + 1
-        except Exception:
-            pass
-    return pos(test)
-
+def winner(player_hand,ai_hand):
+	player_hand = straight(player_hand)
+	ai_hand = straight(ai_hand)
+	if len(player_hand) == 0 and len(ai_hand) != 0:
+		return "ai"
+	elif len(player_hand) != 0 and len(ai_hand) == 0:
+		return "you"
+	elif len(player_hand) == 0 and len(ai_hand) == 0:
+		return "tie"
+	longest_player, longest_ai = longest(player_hand), longest(ai_hand)
+	highest_player, highest_ai = player_hand[longest_player][-1], ai_hand[longest_ai][-1]
+	if len(ai_hand[longest_ai]) > len(player_hand[longest_player]):
+		return "ai"
+	elif len(ai_hand[longest_ai]) < len(player_hand[longest_player]):
+		return "you"
+	if highest_player > highest_ai:
+		return "you"
+	elif highest_player < highest_ai:
+		return "ai"
+	elif highest_player == highest_ai:
+		return "tie"
+	else: return "err"
+					
 def longest(test):
-    ln = []
-    for i in test:
-        ln.append(len(i))
-    if len(set(ln)) > 1:
-        return test.index(max(test, key=len))
-    else:
-        return -1
+	return test.index(max(test,key=len))
+	
+def straight(test):
+	test.sort()
+	temporary, straight = [], []
+	for i in range(1,len(test)):
+		if test[i-1] + 1 == test[i]:
+			temporary.append(test[i-1])
+			temporary.append(test[i])
+		elif test[i-1] + 1 != test[i] and len(set(temporary)) >= 3:
+			straight.append(list(set(temporary)).copy())
+			temporary.clear()
+		else:
+			temporary.clear()
+	if len(set(temporary)) >= 3:
+		straight.append(list(set(temporary)).copy())
+	return straight
 
-def winner(after_ai,after_player):
-    if len(after_ai) == 0 and len(after_player) > 0:
-        return "player"
-    elif len(after_player) == 0 and len(after_ai) > 0:
-        return "ai"
-    elif len(after_ai) == 0 and len(after_player) == 0:
-        return "tie"
-    lon_ai = longest(after_ai)
-    lon_pl = longest(after_player)
-    if len(after_ai[lon_ai]) > len(after_player[lon_pl]):
-        return "ai"
-    elif len(after_player[lon_pl]) > len(after_ai[lon_ai]):
-        return "player"
-    mx_ai = after_ai[lon_ai][-1]
-    mx_pl = after_player[lon_pl][-1]
-    if mx_ai > mx_pl:
-        return "ai"
-    elif mx_pl > mx_ai:
-        return "player"
-    elif mx_pl == mx_ai:
-        return "tie"
-
-# Tu sa nachádza program na testovanie. Cyklus for je rozbitý, snaží sa odstraňovať neexistujúce indexy.
-# Ako vidíme, netreba list dopredu sortovať, je to spravené za nás. Program môže dostať aj negatívne hodnoty,
-# a aj hodnoty vyššie ako 12. Objekt ktorý sa vráti je list v liste, napr.: [[3, 4, 5, 6, 7], [9, 10, 11]].
-# Prvú postupku vieme vybrať pomocou: check_straight(ai)[0] (viď. index). ak chceme najvyššiu, dáme index -1,
-# keďže program dáva najvyššie postupky na koniec.
-
-ai = [1,2,3,4,5,6,7,8,9,10,11,12]
+cards = [1,2,3,4,5,6,7,8,9,10,11,12]
+pl = cards.copy()
+pl1 = cards.copy()
 for i in range(3):
-    try:
-        ai.pop(randint(0,len(ai)))
-    except Exception:
-        pass
-shuffle(ai)
-after = check_straight(ai)
-print("check",after)
-
-# Funkcia longest() vráti index najdlhšej postupky. Ak sú dve rovnaké, vráti tú väčšiu.
-print(longest(after))
-
-pl = [1,2,3,4,5,6,7,8,9,10,11,12]
+	try:
+		pl.pop(randint(0,len(pl)))
+	except Exception:
+		pass
 for i in range(3):
-    try:
-        pl.pop(randint(0,len(pl)))
-    except Exception:
-        pass
-shuffle(pl)
-aftr = check_straight(pl)
-print(aftr)
-print(winner(after,aftr))
-# Funkcia winner určuje víťaza. Na konci jej programovania som zabudol čo robí, ale vyzerá že funguje,
-# ak ju chcete použiť, radšej si ju sami odtestujte.
-
-# Posledné. Kód používa import *, tzn.: nepoužívam random.shuffle() ale len shuffle. Ak máte import :
-# from random import randint; jednoducho pridajte: from random import randint, shuffle (viď. pridanú čiarku a shuffle).
+	try:
+		pl1.pop(randint(0,len(pl1)))
+	except IndexError:
+		pass
+print(winner(pl,pl1))
