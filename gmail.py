@@ -15,12 +15,12 @@ from datetime import date
 from apiclient.discovery import build
 import httplib2
 import os
-
 from apiclient import discovery
 import oauth2client
 from oauth2client import client
 from oauth2client import tools
 from oauth2client import file
+
 def get_credentials():
     home_dir = os.path.expanduser('~')
     credential_dir = os.path.join(home_dir, '.credentials')
@@ -52,7 +52,6 @@ def send_message(service, user_id, message):
   except Exception as e:
     print('An error occurred: %s' % e)
     return None
-
 
 def create_message_with_attachment(sender, to, subject, message_text, file):
   message = MIMEMultipart()
