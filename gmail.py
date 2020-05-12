@@ -153,9 +153,49 @@ for i in teacher:
   print(r,") ",i, sep="")
 who = int(input("Číslo vybraného učiteľa: "))-1
 pripona = str(input("Prípona súboru?"))
-file_name = "send"+pripona
+if pripona[0] == ".":
+  file_name = "send"+pripona
+else:
+  file_name = "send."+pripona
 a = "Riešenie úlohy z %s" %sub[who]
-b = "Dobrý deň,<br>Posielam Vám vypracovanú úlohu z %s.<br><br>Hugo Bohácsek, Ki.B %s #%i<br> Sent via gmail api, <a href=\"https://github.com/oguh43/bilicka/blob/master/gmail.py\">sauce</a>." %(sub[who],dte,res)
+b = "Dobrý deň,<br>Posielam Vám vypracovanú úlohu z %s.<br><br>%s, %s %s #%i<br> Sent via gmail api, <a href=\"https://github.com/oguh43/bilicka/blob/master/gmail.py\">sauce</a>." %(sub[who],teacher[0],sub_a[0],dte,res)
 
-mine = create_message_with_attachment("hugo.bohacsek@gmail.com",adr[who],a,b,file_name)
+mine = create_message_with_attachment(adr[0],adr[who],a,b,file_name)
 testSend = send_message(service, 'me', mine)
+
+"""
+
+!!! DO NOT NAME THIS FILE email.py , IT MESSES UP THE LIBRARIES USED!!!
+
+File name:
+file MUST be named send   <----- will be renamed in the email to (for example): biologia_uloha.docx
+the extension does NOT matter, you will be asked about it. (you can enter it with or without the dot at the start)
+
+Example database and counter syntax:
+
+contacts_db.TXT:
+your_name:classroom:place_holder:your_email
+teacher_name:subject:subject_with_suffix:email
+teacher_name:subject:subject_with_suffix:email
+teacher_name:subject:subject_with_suffix:email
+
+
+your_name will be put into the email as signature
+classroom is a part of the signature
+your_email, from where the email will be sent
+placeholder, can NOT be blank. Enter some string like Test
+
+subject, for example: Informatika
+subject_with_suffix, for example: Informatiky
+!MAKE SURE THERE IS NO NEWLINE UPON CREATION, THE PROGRAM WILL NOT PLACE ONE THERE!
+
+resolved.TXT:
+0
+
+the number will be incremented by one each time and saved, can be overwritten if you chose so, or "corrected"(substract from it)
+!MAKE SURE THERE IS NO NEWLINE UPON CREATION, THE PROGRAM WILL NOT PLACE ONE THERE!
+
+todo:
+    1) Maybe rework the database to use a dictonary instead of lists, with names as keys and the rest as values
+    2) Incorporate resolved.TXT into contacts_db.TXT at the place of placeholder
+"""
