@@ -1,17 +1,18 @@
 import time
+
 def interpret():
     program = input("Zadajte program ")
-    memory, memory_view, pointer,  std_out= [0], True, 0, []
-    for i in program:
-        if i == ">":
-            memory.append(0)
+    memory, memory_view, pointer,  std_out= [0], False, 0, []
     i = 0
     while i < len(program):
-
         if program[i] == "<":
             pointer -= 1
         elif program[i] == ">":
-            pointer += 1
+            if len(memory) == pointer + 1:
+                memory.append(0)
+                pointer += 1
+            else:
+                pointer += 1
         elif program[i] == "-":
             if memory[pointer] > 0:
                 memory[pointer] -= 1
@@ -49,7 +50,7 @@ def interpret():
         i += 1
         if memory_view == True:
             print(f"{memory}\r", end = "")
-            #time.sleep(0.01)
+            time.sleep(0.001)
     if memory_view == True:
         print("")
         print("".join(std_out))
