@@ -27,7 +27,7 @@ def get_x(width):
     return left_border, right_border
 
 def get_y(height):
-    upper_border = (height // 4)
+    upper_border = 0
     lower_border = height - upper_border
     print(upper_border,lower_border)
     return upper_border, lower_border
@@ -50,7 +50,7 @@ def main():
             if "XP" in line:
                 xp = "".join([int(s) for s in line.split() if s.isdigit()])
                 tst(False,xp)
-
+main()
 try:
     if "Apex.exe" in (p.name() for p in psutil.process_iter()):
         waiting()
@@ -58,7 +58,7 @@ except:
     sys.exit()
 
 
-main()
+
 def waiting():
     try:
         if keyboard.is_pressed("q"):
