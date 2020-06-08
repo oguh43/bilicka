@@ -1,6 +1,25 @@
-import pyautogui, psutil, pytesseract, keyboard, sys, time
+import keyboard
+import os
+import psutil
+import pyautogui
+import pytesseract
+import sqlite3
+import sys
+import time
 from win10toast import ToastNotifier
 from PIL import Image
+
+class Database(object):
+    def __init__(self,db = "data.db"):
+        self.db = db
+        if not os.path.exists(self.db):
+            with open(self.db, "w"):
+                pass
+        self._conn = sqlite3.connect(self.db)
+        self._cursor = self._conn.cursor()
+
+    #def struct_pull(self,db,)
+
 
 pytesseract.pytesseract.tesseract_cmd = 'C:\\Program Files\\Tesseract-OCR\\tesseract.exe'
 
@@ -18,7 +37,7 @@ def tst(fail = True, xp = None):
         notif = "Success"
         bdy = "XP with the value of %s was found" %(str(xp))
     toast = ToastNotifier()
-    toast.show_toast(notif,body,duration=5)
+    toast.show_toast(notif,bdy,duration=5,threaded=True)
 
 
 def get_x(width):
@@ -42,14 +61,10 @@ def main():
     img_val = read_xp(crop_img)
     img_val = img_val.split("\n")
     sys.exit()
-    if "XP" not in img_val:
-        tst(True)
-        waiting()
-    else:
-        for line in img_val:
-            if "XP" in line:
-                xp = "".join([int(s) for s in line.split() if s.isdigit()])
-                tst(False,xp)
+    for line in img_val:
+        if "XP" in line:
+            xp = "".join([int(s) for s in line.split() if s.isdigit()])
+            tst(False,xp)
 main()
 try:
     if "Apex.exe" in (p.name() for p in psutil.process_iter()):
