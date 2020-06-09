@@ -6,7 +6,9 @@ import pytesseract
 import sqlite3
 import sys
 import time
+import tkinter
 from win10toast import ToastNotifier
+from tkinter.filedialog import askdirectory
 from PIL import Image
 
 class Database(object):
@@ -65,13 +67,17 @@ def main():
         if "XP" in line:
             xp = "".join([int(s) for s in line.split() if s.isdigit()])
             tst(False,xp)
-main()
+#root = tkinter.Tk()
+#dirname = askdirectory(parent=root, initialdir="/",title="Please select directory.")
+
+#main()
+"""
 try:
     if "Apex.exe" in (p.name() for p in psutil.process_iter()):
         waiting()
 except:
     sys.exit()
-
+"""
 
 
 def waiting():
