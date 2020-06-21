@@ -89,3 +89,4 @@ def waiting():
         waiting()
 
 #TODO: saving, graphs, testing
+#FIXME: verify that Apex.exe is the correct process
