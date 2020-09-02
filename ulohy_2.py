@@ -41,6 +41,7 @@ def pankrac():
             ls.append("".join(ls1))
         else: ls.append(y[i])
     print(" ".join(ls))
+    print(" ".join([word[0].lower()+word[1:].upper() if word[0].isupper() else word for word in input("Sentence?\n>>> ").split(" ")]))
     time.sleep(1)
     ask()
 
