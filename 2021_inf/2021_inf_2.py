@@ -6,16 +6,19 @@ import tkinter.font
 import tkinter as tk
 
 failed = False
-
-try:
-    import pyglet
-except ImportError:
-    python = sys.executable
-    subprocess.check_call([python, "-m", "pip", "install", "pyglet"], stdout=subprocess.DEVNULL)
-    print("Please restart.")
-    sys.exit()
-
 path = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
+
+if os.path.isfile(path+"\\sources\\din1451alt.ttf"):
+    try:
+        import pyglet
+    except ImportError:
+        python = sys.executable
+        subprocess.check_call([python, "-m", "pip", "install", "pyglet"], stdout=subprocess.DEVNULL)
+        print("Please restart.")
+        sys.exit()
+else:
+    failed = True
+    print("Fonts won't load, they are not installed.")
 
 class MainWindow:
     def __init__(self, master: tk.Tk) -> None:
