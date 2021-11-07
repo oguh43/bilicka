@@ -23,7 +23,6 @@ else:
 class MainWindow:
     def __init__(self, master: tk.Tk) -> None:
         self.master = master
-        self.master = master
         self.frame = tk.Frame(self.master)
         self.button1 = tk.Button(self.frame, text = 'Exit', width = 25, command = self.close_windows)
         self.button1.pack()
