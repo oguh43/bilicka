@@ -1,0 +1,1 @@
+print(dict(__import__("collections").Counter(input("Sentence> "))))
