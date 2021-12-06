@@ -21,6 +21,6 @@ def display(buffer: str) -> None:
 
 number = get_input(int,"Číslo> ")
 
-for i in range(get_input(int,"Od> "),stop:=get_input(int,"Do> ")+1):
-    buffer = f"{number*i} {number*(stop-i)}\n"
+for i in range(start:=get_input(int,"Od> "),stop:=get_input(int,"Do> ")+1):
+    buffer = f"{number*i} {number*(stop-i+start-1)}\n"
     display(buffer)
