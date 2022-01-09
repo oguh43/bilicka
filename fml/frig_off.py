@@ -3,7 +3,7 @@ from random import randint
 def insert(source_str, insert_str, pos):
     return source_str[:pos] + insert_str + source_str[pos:]
 
-with open("manipulate.txt", "r") as f:
+with open("manipulate.txt", "r", encoding="utf-8") as f:
     content = f.read()
 
 content = content.split(" ")
