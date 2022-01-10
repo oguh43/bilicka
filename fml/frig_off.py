@@ -4,7 +4,6 @@ from random import randint
 def insert(source_str: str, insert_str: str, pos: int) -> str:
     return source_str[:pos] + insert_str + source_str[pos:]
 
-
 if input("(A)gressive || (S)ilent bypass?").lower() == "a":
 
     with open("manipulate.txt", "r", encoding="utf-8") as f:
