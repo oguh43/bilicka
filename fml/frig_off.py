@@ -24,7 +24,7 @@ else:
     with open("manipulate.txt", "r", encoding="utf-8") as f:
         content = f.read()
 
-    if input("Append invisible char to the (L)eft, or (R)ight?").lower() == "L":
+    if input("Append invisible char to the (L)eft, or (R)ight?").lower() == "l":
         char = "​ "
     else:
         char = " ​"
