@@ -36,6 +36,8 @@ for line in data:
                 stack = stack[0:-1]
             elif numLock.match(buffer):
                 stack += num.search(buffer).group(0)
+			else:
+				stack += buffer
             buffer = ""
             continue
     out.append(stack)
