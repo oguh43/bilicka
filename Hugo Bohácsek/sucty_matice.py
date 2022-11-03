@@ -1,0 +1,2 @@
+m = [[__import__("random").randint(1,100) for _ in range(5)] for q in range(10)]
+print(sum(m[0]) + sum(m[-1]) + sum([x[0] + x[-1] for x in m]), sum([m[x][list(range(len(m))) if len(m) < len(m[0]) else list(range(len(m[0])))[x]] for x in range(len(list(range(len(m))) if len(m) < len(m[0]) else list(range(len(m[0])))))]))
