@@ -1,0 +1,1 @@
+for number in range(5220, 5230 if (q:=open("./hlasovanie_1.txt", "r").read().split("\n")) else 0):[print(f'Number: {number}; Count: {q.count(str(number))}')] + [open(f"{str(number)}_1.txt","w").write("\n".join(map(str,[i for i, x in enumerate(q) if x == str(number)])))]
